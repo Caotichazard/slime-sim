@@ -6,7 +6,13 @@
 
 #define PI 3.14159265358979323846
 
-#define SENSOR_SIZE 4 // a partir de 5 tem melhores resultados, mas chegando no limite, ou otimiza ou não dá mais
+// Variaveis para brincar
+
+#define SENSOR_SIZE 1 // a partir de 5 tem melhores resultados, mas chegando no limite, ou otimiza ou não dá mais
+#define SENSOR_OFFSET 2.0 // valores legais sempre são maiores do que o tamanho do sensor
+#define SENSOR_ANGLE PI/3 //Sempre use angulos em radianos
+
+#define TURN_SPEED 1.0
 
 struct Agent {
     float x;         // x coordinate of the slime command
@@ -140,9 +146,9 @@ void steer( uint agentIndex, float turnSpeed){
     float weigthRigth = 0.0;
 
     // Otimizar aqui, maior gargalo
-    weigthFoward = sense(agentIndex,0.0,6.0);
-    weigthLeft = sense(agentIndex,PI/3,6.0);
-    weigthRigth = sense(agentIndex,-PI/3,6.0);
+    weigthFoward = sense(agentIndex,0.0,SENSOR_OFFSET);
+    weigthLeft = sense(agentIndex,SENSOR_ANGLE,SENSOR_OFFSET);
+    weigthRigth = sense(agentIndex,-SENSOR_ANGLE,SENSOR_OFFSET);
 
 
     // weigthFoward = random(vec2(agentsOrr[agentIndex].x,agentsOrr[agentIndex].y)) * 100.0;
@@ -151,7 +157,7 @@ void steer( uint agentIndex, float turnSpeed){
 
 
 
-    float randomSteerStr = random(agentsOrr[agentIndex].angle);
+    float randomSteerStr = random(agentsOrr[agentIndex].angle)  + 1.0;
 
     if(weigthFoward > weigthLeft && weigthFoward > weigthRigth){
         agentsOrr[agentIndex].angle += 0;
@@ -180,7 +186,7 @@ void main()
     
     if (isInside(uint(agentsOrr[agentIndex].x), uint(agentsOrr[agentIndex].y)))
     {
-        steer(agentIndex, 2.0);
+        steer(agentIndex, TURN_SPEED);
         agentsOrr[agentIndex].x += cos(agentsOrr[agentIndex].angle);
         agentsOrr[agentIndex].y += sin(agentsOrr[agentIndex].angle);
     }else{

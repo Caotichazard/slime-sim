@@ -22,9 +22,14 @@
 
 // IMPORTANT: This must match slime*.glsl slime_WIDTH constant.
 // This must be a multiple of 16 (check slimeLogic compute dispatch).
-#define NUM_AGENTS 65535 // NUMERO MAXIMO 65535
 
-#define WIN_SIZE 980
+// Brincar com a quantidade de agentes
+#define NUM_AGENTS 65535 // NUMERO MAXIMO 65535
+#define WIN_SIZE 980 // tem que ser igual esse valor em TODOS os arquivos
+
+
+// #define NUM_AGENTS 10000
+// #define WIN_SIZE 512
 
 // Game Of Life Update Command
 typedef struct Agent
@@ -40,9 +45,13 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    InitWindow(WIN_SIZE, WIN_SIZE, "raylib [rlgl] example - compute shader - game of life");
+    // Essa engine usa o framerate pra decidir a velocidade das coisas (sem tempo pra pensar em deltaTime)
+    // Ou seja +FPS + Rapido
+    InitWindow(WIN_SIZE, WIN_SIZE, "compute shader - Slime Simulation");
     //SetTargetFPS(60);
     // SetTargetFPS(120);
+    SetTargetFPS(30);
+
 
     const Vector2 resolution = {WIN_SIZE, WIN_SIZE};
 
@@ -79,12 +88,16 @@ int main(void)
     UnloadImage(whiteImage);
     //--------------------------------------------------------------------------------------
 
+    // Logica de inicialização dos agentes
     for (int i = 0; i < NUM_AGENTS; i++)
     {
-        transferBuffer[i].x = WIN_SIZE/2 + ((((float)rand()/(float)(RAND_MAX)) * 2 * WIN_SIZE/4) - WIN_SIZE/4);
-        transferBuffer[i].y = WIN_SIZE/2 + ((((float)rand()/(float)(RAND_MAX)) * 2 * WIN_SIZE/4) - WIN_SIZE/4);
+        //Posição inicial
+        transferBuffer[i].x = WIN_SIZE/2 + ((((float)rand()/(float)(RAND_MAX)) * 2 * WIN_SIZE/2) - WIN_SIZE/2);
+        transferBuffer[i].y = WIN_SIZE/2 + ((((float)rand()/(float)(RAND_MAX)) * 2 * WIN_SIZE/2) - WIN_SIZE/2);
         // transferBuffer[i].x = WIN_SIZE/2;
         // transferBuffer[i].y = WIN_SIZE/2;
+
+        // Angulo inicial
         transferBuffer[i].angle = atan2( -(transferBuffer[i].y - (float)WIN_SIZE/2) , transferBuffer[i].x - (float)WIN_SIZE/2  ); //TODO: brincar com angulos inicias
         // transferBuffer[i].angle = 0;
         // transferBuffer[i].angle = ((float)rand()/(float)(RAND_MAX)) * 2 * PI;

@@ -5,6 +5,11 @@
 
 #define WIN_SIZE 980
 
+
+#define DIFFUSE_RATE 0.025
+#define EVAPORATION_RATE 0.02
+
+
 // Input vertex attributes (from vertex shader)
 in vec2 fragTexCoord;
 
@@ -86,7 +91,7 @@ void main()
 
         blurResult = blurResult / 9.0;
 
-        golBuffer[coords.x + coords.y*uvec2(resolution).x] = mix(originalValue,blurResult,0.025) - 0.01;
+        golBuffer[coords.x + coords.y*uvec2(resolution).x] = mix(originalValue,blurResult,DIFFUSE_RATE) - EVAPORATION_RATE;
         
     }
     else{ finalColor = vec4(0.0, 0.0, 0.0, 1.0);}
