@@ -20,16 +20,18 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 // IMPORTANT: This must match slime*.glsl slime_WIDTH constant.
 // This must be a multiple of 16 (check slimeLogic compute dispatch).
 
 // Brincar com a quantidade de agentes
 #define NUM_AGENTS 65535 // NUMERO MAXIMO 65535
-#define WIN_SIZE 980 // tem que ser igual esse valor em TODOS os arquivos
+//#define WIN_SIZE 980 // tem que ser igual esse valor em TODOS os arquivos
 
 
 // #define NUM_AGENTS 10000
-// #define WIN_SIZE 512
+ #define WIN_SIZE 512
 
 // Game Of Life Update Command
 typedef struct Agent
@@ -51,6 +53,7 @@ int main(void)
     //SetTargetFPS(60);
     // SetTargetFPS(120);
     SetTargetFPS(30);
+    printf("%d\n", sizeof(Agent));
 
 
     const Vector2 resolution = {WIN_SIZE, WIN_SIZE};
@@ -98,7 +101,7 @@ int main(void)
         // transferBuffer[i].y = WIN_SIZE/2;
 
         // Angulo inicial
-        transferBuffer[i].angle = atan2( -(transferBuffer[i].y - (float)WIN_SIZE/2) , transferBuffer[i].x - (float)WIN_SIZE/2  ); //TODO: brincar com angulos inicias
+        transferBuffer[i].angle = PI + atan2( -(transferBuffer[i].y - (float)WIN_SIZE/2) , transferBuffer[i].x - (float)WIN_SIZE/2  ); //TODO: brincar com angulos inicias
         // transferBuffer[i].angle = 0;
         // transferBuffer[i].angle = ((float)rand()/(float)(RAND_MAX)) * 2 * PI;
     }

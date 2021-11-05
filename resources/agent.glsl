@@ -2,15 +2,20 @@
 
 // Game of Life logic shader
 
-#define WIN_SIZE 980
+#define WIN_SIZE 512
+
 
 #define PI 3.14159265358979323846
 
 // Variaveis para brincar
 
-#define SENSOR_SIZE 1 // a partir de 5 tem melhores resultados, mas chegando no limite, ou otimiza ou não dá mais
-#define SENSOR_OFFSET 2.0 // valores legais sempre são maiores do que o tamanho do sensor
+#define SENSOR_SIZE 5 // a partir de 5 tem melhores resultados, mas chegando no limite, ou otimiza ou não dá mais
+#define SENSOR_OFFSET 150.0 // valores legais sempre são maiores do que o tamanho do sensor
 #define SENSOR_ANGLE PI/3 //Sempre use angulos em radianos
+
+
+// Valores bons de sensor offset são entre o valor do sensor size até o 30x o valor do sensor size
+//Valors bons de sensor angle estão entre pi/2 e pi/64
 
 #define TURN_SPEED 1.0
 
@@ -158,6 +163,7 @@ void steer( uint agentIndex, float turnSpeed){
 
 
     float randomSteerStr = random(agentsOrr[agentIndex].angle)  + 1.0;
+    //float randomSteerStr = 1.0;
 
     if(weigthFoward > weigthLeft && weigthFoward > weigthRigth){
         agentsOrr[agentIndex].angle += 0;
@@ -165,9 +171,10 @@ void steer( uint agentIndex, float turnSpeed){
         agentsOrr[agentIndex].angle += ((randomSteerStr - 0.5) * 2.0) *turnSpeed;
         //agentsOrr[agentIndex].angle += 0;
 
-    }else if(weigthLeft < weigthRigth){
+    }else if( weigthRigth > weigthLeft){
         agentsOrr[agentIndex].angle -= randomSteerStr *turnSpeed;
-    }else if( weigthRigth < weigthLeft){
+    }
+    else if(weigthLeft > weigthRigth){
         agentsOrr[agentIndex].angle += randomSteerStr *turnSpeed;
     }
 }

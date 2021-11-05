@@ -3,7 +3,8 @@
 // Game of Life rendering shader
 // Just renders the content of the ssbo at binding 1 to screen
 
-#define WIN_SIZE 980
+#define WIN_SIZE 512
+
 
 
 #define DIFFUSE_RATE 0.025
