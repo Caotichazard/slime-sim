@@ -1,7 +1,7 @@
 # Slime Simulation on Compute Shader with Raylib
 
 
-![Gif1](https://github.com/Caotichazard/slime-sim/blob/main/media/ComputeShader%20SlimeSim-%2505d.gif)
+
 
 Tudo veio da ideia desse video [aqui](https://www.youtube.com/watch?v=X-iSQQgOd1A) 
 
