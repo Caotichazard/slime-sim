@@ -26,11 +26,11 @@
 // This must be a multiple of 16 (check slimeLogic compute dispatch).
 
 // Brincar com a quantidade de agentes
-#define NUM_AGENTS 65535 // NUMERO MAXIMO 65535
+// #define NUM_AGENTS 65535 // NUMERO MAXIMO 65535
 //#define WIN_SIZE 980 // tem que ser igual esse valor em TODOS os arquivos
 
 
-// #define NUM_AGENTS 10000
+#define NUM_AGENTS 50000
  #define WIN_SIZE 512
 
 // Game Of Life Update Command
@@ -52,7 +52,7 @@ int main(void)
     InitWindow(WIN_SIZE, WIN_SIZE, "compute shader - Slime Simulation");
     //SetTargetFPS(60);
     // SetTargetFPS(120);
-    SetTargetFPS(30);
+    // SetTargetFPS(30);
     printf("%d\n", sizeof(Agent));
 
 

@@ -9,10 +9,14 @@
 
 // Variaveis para brincar
 
-#define SENSOR_SIZE 5 // a partir de 5 tem melhores resultados, mas chegando no limite, ou otimiza ou não dá mais
-#define SENSOR_OFFSET 150.0 // valores legais sempre são maiores do que o tamanho do sensor
-#define SENSOR_ANGLE PI/3 //Sempre use angulos em radianos
+// #define SENSOR_SIZE 5 // a partir de 5 tem melhores resultados, mas chegando no limite, ou otimiza ou não dá mais
+// #define SENSOR_OFFSET 6.0 // valores legais sempre são maiores do que o tamanho do sensor
+// #define SENSOR_ANGLE PI/3 //Sempre use angulos em radianos
 
+
+#define SENSOR_ANGLE PI/6.0
+#define SENSOR_RADIUS 18.0
+#define SENSOR_STEP PI/36.0
 
 // Valores bons de sensor offset são entre o valor do sensor size até o 30x o valor do sensor size
 //Valors bons de sensor angle estão entre pi/2 e pi/64
@@ -124,22 +128,43 @@ float newAngle ( vec2 st){
     
 }
 
-float sense(uint agentInd, float angleOffset, float sensorOffsetDst){
-    float sensorAngle = agentsOrr[agentInd].angle + angleOffset;
-    vec2 sensorDir = vec2(cos(sensorAngle),sin(sensorAngle));
-    vec2 sensorCenter = vec2(agentsOrr[agentInd].x,agentsOrr[agentInd].y) + (sensorDir * sensorOffsetDst);
+// float sense(uint agentInd, float angleOffset, float sensorOffsetDst){
+//     float sensorAngle = agentsOrr[agentInd].angle + angleOffset;
+//     vec2 sensorDir = vec2(cos(sensorAngle),sin(sensorAngle));
+//     vec2 sensorCenter = vec2(agentsOrr[agentInd].x,agentsOrr[agentInd].y) + (sensorDir * sensorOffsetDst);
+
+//     float sum = 0.0;
+
+//     // como paralelizar isso
+//     for(int i=-SENSOR_SIZE;i<SENSOR_SIZE;i++){
+//         for(int j=-SENSOR_SIZE;j<SENSOR_SIZE;j++){
+//             vec2 pos = sensorCenter + vec2(float(i),float(j));
+//             if(isInside(uint(pos.x),uint(pos.y))){
+//                 sum += fetchGol(uint(pos.x),uint(pos.y));
+//             }
+//         }
+//     }
+//     return sum;
+// }
+
+float senseRad(uint agentInd, float initAngle, float endAngle, float rad){
+    float angleRelInit = agentsOrr[agentInd].angle + initAngle;
+    float angleRelEnd = agentsOrr[agentInd].angle + endAngle;
 
     float sum = 0.0;
 
-    // como paralelizar isso
-    for(int i=-SENSOR_SIZE;i<SENSOR_SIZE;i++){
-        for(int j=-SENSOR_SIZE;j<SENSOR_SIZE;j++){
-            vec2 pos = sensorCenter + vec2(float(i),float(j));
+
+    for(float curAngle = angleRelInit;curAngle<=angleRelEnd; curAngle+= SENSOR_STEP){
+        vec2 angleVec = vec2(cos(curAngle),sin(curAngle));
+        for(float curRad = 0.0;curRad<=rad;curRad+=1.0){
+            vec2 pos = vec2(agentsOrr[agentInd].x,agentsOrr[agentInd].y) + (angleVec * curRad);
             if(isInside(uint(pos.x),uint(pos.y))){
                 sum += fetchGol(uint(pos.x),uint(pos.y));
             }
         }
+
     }
+
     return sum;
 }
 
@@ -150,10 +175,15 @@ void steer( uint agentIndex, float turnSpeed){
     float weigthLeft = 0.0;
     float weigthRigth = 0.0;
 
-    // Otimizar aqui, maior gargalo
-    weigthFoward = sense(agentIndex,0.0,SENSOR_OFFSET);
-    weigthLeft = sense(agentIndex,SENSOR_ANGLE,SENSOR_OFFSET);
-    weigthRigth = sense(agentIndex,-SENSOR_ANGLE,SENSOR_OFFSET);
+    // Sensor em area quadrada
+    // weigthFoward = sense(agentIndex,0.0,SENSOR_OFFSET);
+    // weigthLeft = sense(agentIndex,SENSOR_ANGLE,SENSOR_OFFSET);
+    // weigthRigth = sense(agentIndex,-SENSOR_ANGLE,SENSOR_OFFSET);
+
+    // Sensor em circulo
+    weigthFoward = senseRad(agentIndex,-SENSOR_ANGLE/2.0,SENSOR_ANGLE/2.0,SENSOR_RADIUS);
+    weigthLeft = senseRad(agentIndex,SENSOR_ANGLE/2.0,((SENSOR_ANGLE*3.0)/2.0),SENSOR_RADIUS);
+    weigthRigth = senseRad(agentIndex,-((SENSOR_ANGLE*3.0)/2.0),-SENSOR_ANGLE/2.0,SENSOR_RADIUS);
 
 
     // weigthFoward = random(vec2(agentsOrr[agentIndex].x,agentsOrr[agentIndex].y)) * 100.0;
@@ -162,8 +192,8 @@ void steer( uint agentIndex, float turnSpeed){
 
 
 
-    float randomSteerStr = random(agentsOrr[agentIndex].angle)  + 1.0;
-    //float randomSteerStr = 1.0;
+    float randomSteerStr = random(agentsOrr[agentIndex].angle);
+    // float randomSteerStr = 1.0;
 
     if(weigthFoward > weigthLeft && weigthFoward > weigthRigth){
         agentsOrr[agentIndex].angle += 0;
