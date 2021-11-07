@@ -2,7 +2,7 @@
 
 // Game of Life logic shader
 
-#define WIN_SIZE 512
+#define WIN_SIZE 980 
 
 struct Agent {
     float x;         // x coordinate of the slime command

@@ -3,12 +3,12 @@
 // Game of Life rendering shader
 // Just renders the content of the ssbo at binding 1 to screen
 
-#define WIN_SIZE 512
+#define WIN_SIZE 980
 
 
 
 #define DIFFUSE_RATE 0.025
-#define EVAPORATION_RATE 0.02
+#define EVAPORATION_RATE 0.01
 
 
 // Input vertex attributes (from vertex shader)
@@ -79,7 +79,7 @@ void main()
 
         float originalValue = golBuffer[coords.x + coords.y*uvec2(resolution).x];
         
-        finalColor = vec4(vec3(1.0),golBuffer[coords.x + coords.y*uvec2(resolution).x]);
+        finalColor = vec4(mix(vec3(0.0196, 0.5569, 0.6549),vec3(0.1804, 0.8314, 0.4549),(golBuffer[coords.x + coords.y*uvec2(resolution).x]*0.5)),golBuffer[coords.x + coords.y*uvec2(resolution).x]*10.0);
 
         blurResult += fetchGol(coords.x - 1, coords.y - 1);   // Top left
         blurResult += fetchGol(coords.x, coords.y - 1);       // Top middle

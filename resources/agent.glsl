@@ -2,7 +2,7 @@
 
 // Game of Life logic shader
 
-#define WIN_SIZE 512
+#define WIN_SIZE 980 
 
 
 #define PI 3.14159265358979323846
@@ -15,7 +15,7 @@
 
 
 #define SENSOR_ANGLE PI/6.0
-#define SENSOR_RADIUS 18.0
+#define SENSOR_RADIUS 14.0
 #define SENSOR_STEP PI/36.0
 
 // Valores bons de sensor offset são entre o valor do sensor size até o 30x o valor do sensor size

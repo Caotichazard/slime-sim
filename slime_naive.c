@@ -27,12 +27,12 @@
 
 // Brincar com a quantidade de agentes
 // #define NUM_AGENTS 65535 // NUMERO MAXIMO 65535
-//#define WIN_SIZE 980 // tem que ser igual esse valor em TODOS os arquivos
+#define WIN_SIZE 980 // tem que ser igual esse valor em TODOS os arquivos
 
 
-#define NUM_AGENTS 50000
- #define WIN_SIZE 512
-
+#define NUM_AGENTS 20000
+//  #define WIN_SIZE 512
+// 
 // Game Of Life Update Command
 typedef struct Agent
 {
@@ -155,7 +155,7 @@ int main(void)
 
         // DrawText("Use Mouse wheel to increase/decrease brush size", 10, 10, 20, WHITE);
         // DrawFPS(GetScreenWidth() - 100, 10);
-        DrawFPS(10, 10);
+        // DrawFPS(10, 10);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

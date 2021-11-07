@@ -1,7 +1,8 @@
 # Slime Simulation on Compute Shader with Raylib
 
 
-![Gif1](media/ComputeShader SlimeSim Min-%05d.gif)
+![Gif1](https://cdn.discordapp.com/attachments/499733748187660312/907026463981707284/SlimeGreen-05d.gif)
+![Gif2](https://cdn.discordapp.com/attachments/499733748187660312/907005284873027584/ComputeShader_SlimeSim_Min-05d.gif)
 
 Tudo veio da ideia desse video [aqui](https://www.youtube.com/watch?v=X-iSQQgOd1A) 
 
