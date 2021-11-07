@@ -1,5 +1,8 @@
 # Slime Simulation on Compute Shader with Raylib
 
+
+![Gif1](media/ComputeShader SlimeSim Min-%05d.gif)
+
 Tudo veio da ideia desse video [aqui](https://www.youtube.com/watch?v=X-iSQQgOd1A) 
 
 Basicamente a ideia é, você tem um agente numa posição X,Y, ele vai observar uma área a N casas de distancia e se houver um "rastro" (a analogia seria com feromonios de formigas) ele vai seguir esse mesmo caminho.
